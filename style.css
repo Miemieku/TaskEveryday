@@ -1,99 +1,128 @@
+/* 全局样式 */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #f4f6f9; /* 更加柔和的灰色背景 */
+    margin: 0;
+    padding: 0;
 }
 
+/* 标题 */
 h1 {
-    margin-bottom: 10px;
+    margin: 20px 0;
+    color: #333; /* 深色标题 */
 }
 
+/* 控制按钮区域 */
 .controls {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 button {
-    background: #0078D7;
+    background: #005a9e; /* 更深的蓝色 */
     color: white;
     border: none;
-    padding: 10px;
+    padding: 10px 15px;
     cursor: pointer;
     margin: 5px;
     font-size: 16px;
+    border-radius: 5px; /* 圆角设计 */
+    transition: background 0.2s;
 }
 
 button:hover {
-    background: #005a9e;
+    background: #003f73; /* 深色鼠标悬浮效果 */
 }
 
+/* 日历主框架 */
 .calendar {
     display: flex;
     flex-direction: column;
     width: 90%;
     margin: 0 auto;
-    gap: 10px;
+    gap: 15px;
 }
 
+/* 每周框架 */
 .week-container {
     display: flex;
     flex-direction: column;
 }
 
+/* 星期标题 */
 .weekdays, .dates {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    background: #0078D7;
-    color: white;
-    padding: 10px 0;
     font-weight: bold;
+    padding: 12px 0;
 }
 
-.weekdays div {
-    text-align: center;
-    padding: 5px;
+/* 星期标题（顶部） */
+.weekdays {
+    background: #1f4e79; /* 深蓝色背景 */
+    color: white;
+    border-radius: 5px 5px 0 0;
 }
 
+/* 具体日期（第二行） */
 .dates {
-    background: #f1f1f1;
+    background: #e7e9ed; /* 更加专业的灰色 */
+    color: #333;
     font-weight: normal;
-    color: black;
 }
 
-.dates div {
-    text-align: center;
-    padding: 5px;
-}
-
+/* 任务容器 */
 .task-container {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     border: 1px solid #ddd;
+    background: white;
 }
 
+/* 任务列 */
 .task-column {
     border-right: 1px solid #ddd;
-    min-height: 300px;
+    min-height: 250px;
     padding: 10px;
+    background: white;
+    transition: background 0.2s;
 }
 
-.task-column:last-child {
-    border-right: none;
-}
-
-/* 今日列样式 */
+/* 今日列：使用淡蓝色突出 */
 .today-column {
-    background: #DFF0D8 !important; /* 绿色 */
+    background: #d6e9f8 !important; /* 淡蓝色 */
+    border-left: 4px solid #005a9e; /* 左侧加蓝色标记 */
 }
 
+/* 任务样式 */
 .task {
-    background: #f1f1f1;
+    background: #eef1f5; /* 轻微的阴影背景 */
     margin: 5px 0;
-    padding: 5px;
-    border-radius: 3px;
+    padding: 8px;
+    border-radius: 5px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-left: 4px solid #0078D7;
 }
 
-.task input {
-    margin-right: 5px;
+/* 任务输入框 */
+.task-column input {
+    width: 80%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+/* 任务删除按钮 */
+.task button {
+    background: #d9534f; /* 红色删除按钮 */
+    border-radius: 3px;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.task button:hover {
+    background: #c9302c;
 }
