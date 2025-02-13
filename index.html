@@ -1,27 +1,25 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>任务管理</title>
+    <title>Wochenaufgabenverwaltung</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>每周任务管理</h1>
-    <div class="calendar">
-        <div class="weekdays">
-            <div>周一</div>
-            <div>周二</div>
-            <div>周三</div>
-            <div>周四</div>
-            <div>周五</div>
-            <div>周六</div>
-            <div>周日</div>
-        </div>
-        <div class="task-container">
-            <!-- 任务列将在 script.js 动态填充 -->
-        </div>
+    <h1>Wochenaufgabenverwaltung</h1>
+    
+    <div class="controls">
+        <button id="prevWeek">◀ Vorherige Woche</button>
+        <button id="todayButton">Heute</button>
+        <button id="nextWeek">Nächste Woche ▶</button>
     </div>
+
+    <div class="calendar">
+        <div class="weekdays" id="weekdays"></div>
+        <div class="task-container" id="task-container"></div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

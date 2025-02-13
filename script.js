@@ -1,36 +1,65 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const weekDays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
-    const taskContainer = document.querySelector(".task-container");
+    const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+    let startDate = new Date(); // 以今天为起点
+    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // 调整到本周一
 
-    // 生成每一天的任务列
-    weekDays.forEach((day, index) => {
-        const column = document.createElement("div");
-        column.classList.add("task-column");
+    const weekdaysContainer = document.getElementById("weekdays");
+    const taskContainer = document.getElementById("task-container");
 
-        const title = document.createElement("h3");
-        title.textContent = day;
-        column.appendChild(title);
+    function renderCalendar() {
+        weekdaysContainer.innerHTML = "";
+        taskContainer.innerHTML = "";
 
-        const taskList = document.createElement("div");
-        taskList.classList.add("task-list");
-        column.appendChild(taskList);
+        for (let i = 0; i < 14; i++) {
+            let date = new Date(startDate);
+            date.setDate(startDate.getDate() + i);
 
-        const input = document.createElement("input");
-        input.type = "text";
-        input.placeholder = "添加任务";
-        column.appendChild(input);
+            let dateStr = `${weekDays[i % 7]} - ${date.toLocaleDateString("de-DE", { day: 'numeric', month: 'long' })}`;
 
-        const addButton = document.createElement("button");
-        addButton.textContent = "添加";
-        addButton.onclick = function () {
-            addTask(input, taskList, index);
-        };
-        column.appendChild(addButton);
+            // 添加星期标题
+            const dayHeader = document.createElement("div");
+            dayHeader.textContent = weekDays[i % 7];
+            weekdaysContainer.appendChild(dayHeader);
 
-        taskContainer.appendChild(column);
-    });
+            // 创建任务列
+            const column = document.createElement("div");
+            column.classList.add("task-column");
 
-    function addTask(input, taskList, dayIndex) {
+            // 如果是今天，添加绿色背景
+            const today = new Date();
+            if (date.toDateString() === today.toDateString()) {
+                column.classList.add("today-column");
+            }
+
+            // 显示日期
+            const title = document.createElement("h3");
+            title.textContent = dateStr;
+            column.appendChild(title);
+
+            // 任务列表
+            const taskList = document.createElement("div");
+            taskList.classList.add("task-list");
+            column.appendChild(taskList);
+
+            // 输入框
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Aufgabe hinzufügen";
+            column.appendChild(input);
+
+            // 添加按钮
+            const addButton = document.createElement("button");
+            addButton.textContent = "Hinzufügen";
+            addButton.onclick = function () {
+                addTask(input, taskList);
+            };
+            column.appendChild(addButton);
+
+            taskContainer.appendChild(column);
+        }
+    }
+
+    function addTask(input, taskList) {
         if (input.value.trim() === "") return;
 
         const taskDiv = document.createElement("div");
@@ -50,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
         taskText.textContent = input.value;
 
         const deleteButton = document.createElement("button");
-        deleteButton.textContent = "删除";
+        deleteButton.textContent = "Löschen";
         deleteButton.onclick = function () {
             taskList.removeChild(taskDiv);
         };
@@ -62,4 +91,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.value = "";
     }
+
+    document.getElementById("prevWeek").addEventListener("click", function () {
+        startDate.setDate(startDate.getDate() - 7);
+        renderCalendar();
+    });
+
+    document.getElementById("nextWeek").addEventListener("click", function () {
+        startDate.setDate(startDate.getDate() + 7);
+        renderCalendar();
+    });
+
+    document.getElementById("todayButton").addEventListener("click", function () {
+        startDate = new Date();
+        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
 });

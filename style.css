@@ -7,6 +7,24 @@ h1 {
     margin-bottom: 10px;
 }
 
+.controls {
+    margin-bottom: 10px;
+}
+
+button {
+    background: #0078D7;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #005a9e;
+}
+
 .calendar {
     display: flex;
     flex-direction: column;
@@ -16,7 +34,7 @@ h1 {
 
 .weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(14, 1fr); /* 显示两周 */
     background: #0078D7;
     color: white;
     padding: 10px 0;
@@ -30,7 +48,7 @@ h1 {
 
 .task-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(14, 1fr); /* 14天 */
     border: 1px solid #ddd;
 }
 
@@ -42,6 +60,11 @@ h1 {
 
 .task-column:last-child {
     border-right: none;
+}
+
+/* 今日列样式 */
+.today-column {
+    background: #DFF0D8 !important; /* 绿色 */
 }
 
 .task {
@@ -56,16 +79,4 @@ h1 {
 
 .task input {
     margin-right: 5px;
-}
-
-button {
-    background: #0078D7;
-    color: white;
-    border: none;
-    padding: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #005a9e;
 }
