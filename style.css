@@ -1,0 +1,71 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 10px;
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #0078D7;
+    color: white;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.weekdays div {
+    text-align: center;
+    padding: 5px;
+}
+
+.task-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border: 1px solid #ddd;
+}
+
+.task-column {
+    border-right: 1px solid #ddd;
+    min-height: 400px;
+    padding: 10px;
+}
+
+.task-column:last-child {
+    border-right: none;
+}
+
+.task {
+    background: #f1f1f1;
+    margin: 5px 0;
+    padding: 5px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task input {
+    margin-right: 5px;
+}
+
+button {
+    background: #0078D7;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #005a9e;
+}

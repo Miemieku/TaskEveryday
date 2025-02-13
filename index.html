@@ -3,110 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>每日任务管理</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            text-align: center;
-        }
-        h2 {
-            margin-bottom: 10px;
-        }
-        .task-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .day {
-            width: 100%;
-            margin-bottom: 20px;
-            padding: 10px;
-            background: #f4f4f4;
-            border-radius: 5px;
-        }
-        .day h3 {
-            margin: 0 0 10px;
-        }
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        li {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 5px 0;
-            padding: 5px;
-            background: white;
-            border-radius: 3px;
-            width: 100%;
-        }
-        button {
-            margin-top: 10px;
-        }
-    </style>
+    <title>任务管理</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>每日任务管理</h2>
-    <div class="task-container" id="taskContainer"></div>
-    <script>
-        function getFormattedDate(offset = 0) {
-            const date = new Date();
-            date.setDate(date.getDate() + offset);
-            return date.toISOString().split('T')[0];
-        }
-        
-        function loadTasks() {
-            const taskContainer = document.getElementById("taskContainer");
-            taskContainer.innerHTML = "";
-            
-            for (let i = 0; i < 5; i++) { // 显示未来5天任务
-                const day = getFormattedDate(i);
-                const tasks = JSON.parse(localStorage.getItem(day)) || [];
-                
-                const dayDiv = document.createElement("div");
-                dayDiv.classList.add("day");
-                dayDiv.innerHTML = `<h3>${day}</h3><ul id="tasks-${day}"></ul>
-                                    <input type='text' id='input-${day}' placeholder='添加任务'>
-                                    <button onclick="addTask('${day}')">添加</button>`;
-                taskContainer.appendChild(dayDiv);
-                
-                const taskList = document.getElementById(`tasks-${day}`);
-                tasks.forEach((task, index) => {
-                    const li = document.createElement("li");
-                    const checkbox = document.createElement("input");
-                    checkbox.type = "checkbox";
-                    checkbox.checked = task.completed;
-                    checkbox.onchange = () => toggleTask(day, index);
-                    li.appendChild(checkbox);
-                    li.appendChild(document.createTextNode(task.text));
-                    taskList.appendChild(li);
-                });
-            }
-        }
-        
-        function addTask(day) {
-            const taskInput = document.getElementById(`input-${day}`);
-            const tasks = JSON.parse(localStorage.getItem(day)) || [];
-            if (taskInput.value.trim()) {
-                tasks.push({ text: taskInput.value, completed: false });
-                localStorage.setItem(day, JSON.stringify(tasks));
-                taskInput.value = "";
-                loadTasks();
-            }
-        }
-        
-        function toggleTask(day, index) {
-            const tasks = JSON.parse(localStorage.getItem(day));
-            tasks[index].completed = !tasks[index].completed;
-            localStorage.setItem(day, JSON.stringify(tasks));
-            loadTasks();
-        }
-        
-        loadTasks();
-    </script>
+    <h1>每周任务管理</h1>
+    <div class="calendar">
+        <div class="weekdays">
+            <div>周一</div>
+            <div>周二</div>
+            <div>周三</div>
+            <div>周四</div>
+            <div>周五</div>
+            <div>周六</div>
+            <div>周日</div>
+        </div>
+        <div class="task-container">
+            <!-- 任务列将在 script.js 动态填充 -->
+        </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
