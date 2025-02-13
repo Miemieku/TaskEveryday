@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日任务管理</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 10px;
+            background: #f4f4f4;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="date"></h2>
+    <input type="text" id="taskInput" placeholder="添加新任务">
+    <button onclick="addTask()">添加任务</button>
+    <ul id="taskList"></ul>
+    <script>
+        document.getElementById("date").innerText = new Date().toLocaleDateString();
+
+        function loadTasks() {
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            const taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+            tasks.forEach((task, index) => {
+                const li = document.createElement("li");
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = task.completed;
+                checkbox.onchange = () => toggleTask(index);
+                li.appendChild(checkbox);
+                li.appendChild(document.createTextNode(task.text));
+                taskList.appendChild(li);
+            });
+        }
+
+        function addTask() {
+            const taskInput = document.getElementById("taskInput");
+            const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+            if (taskInput.value.trim()) {
+                tasks.push({ text: taskInput.value, completed: false });
+                localStorage.setItem("tasks", JSON.stringify(tasks));
+                taskInput.value = "";
+                loadTasks();
+            }
+        }
+
+        function toggleTask(index) {
+            const tasks = JSON.parse(localStorage.getItem("tasks"));
+            tasks[index].completed = !tasks[index].completed;
+            localStorage.setItem("tasks", JSON.stringify(tasks));
+            loadTasks();
+        }
+
+        loadTasks();
+    </script>
+</body>
+</html>
