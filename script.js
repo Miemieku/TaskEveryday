@@ -1,25 +1,39 @@
 document.addEventListener("DOMContentLoaded", function () {
     const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
-    let startDate = new Date(); // 以今天为起点
+    let startDate = new Date();
     startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // 调整到本周一
 
-    const weekdaysContainer = document.getElementById("weekdays");
-    const taskContainer = document.getElementById("task-container");
-
     function renderCalendar() {
+        renderWeek("weekdays1", "dates1", "task-container1", startDate);
+        const nextWeekStart = new Date(startDate);
+        nextWeekStart.setDate(startDate.getDate() + 7);
+        renderWeek("weekdays2", "dates2", "task-container2", nextWeekStart);
+    }
+
+    function renderWeek(weekdaysId, datesId, containerId, startOfWeek) {
+        const weekdaysContainer = document.getElementById(weekdaysId);
+        const datesContainer = document.getElementById(datesId);
+        const taskContainer = document.getElementById(containerId);
+
         weekdaysContainer.innerHTML = "";
+        datesContainer.innerHTML = "";
         taskContainer.innerHTML = "";
 
-        for (let i = 0; i < 14; i++) {
-            let date = new Date(startDate);
-            date.setDate(startDate.getDate() + i);
+        for (let i = 0; i < 7; i++) {
+            let date = new Date(startOfWeek);
+            date.setDate(startOfWeek.getDate() + i);
 
-            let dateStr = `${weekDays[i % 7]} - ${date.toLocaleDateString("de-DE", { day: 'numeric', month: 'long' })}`;
+            let dateStr = `${date.toLocaleDateString("de-DE", { day: 'numeric', month: 'long' })}`;
 
             // 添加星期标题
             const dayHeader = document.createElement("div");
-            dayHeader.textContent = weekDays[i % 7];
+            dayHeader.textContent = weekDays[i];
             weekdaysContainer.appendChild(dayHeader);
+
+            // 添加日期
+            const dateDiv = document.createElement("div");
+            dateDiv.textContent = dateStr;
+            datesContainer.appendChild(dateDiv);
 
             // 创建任务列
             const column = document.createElement("div");
@@ -30,11 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
             if (date.toDateString() === today.toDateString()) {
                 column.classList.add("today-column");
             }
-
-            // 显示日期
-            const title = document.createElement("h3");
-            title.textContent = dateStr;
-            column.appendChild(title);
 
             // 任务列表
             const taskList = document.createElement("div");

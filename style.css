@@ -30,11 +30,17 @@ button:hover {
     flex-direction: column;
     width: 90%;
     margin: 0 auto;
+    gap: 10px;
 }
 
-.weekdays {
+.week-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.weekdays, .dates {
     display: grid;
-    grid-template-columns: repeat(14, 1fr); /* 显示两周 */
+    grid-template-columns: repeat(7, 1fr);
     background: #0078D7;
     color: white;
     padding: 10px 0;
@@ -46,15 +52,26 @@ button:hover {
     padding: 5px;
 }
 
+.dates {
+    background: #f1f1f1;
+    font-weight: normal;
+    color: black;
+}
+
+.dates div {
+    text-align: center;
+    padding: 5px;
+}
+
 .task-container {
     display: grid;
-    grid-template-columns: repeat(14, 1fr); /* 14天 */
+    grid-template-columns: repeat(7, 1fr);
     border: 1px solid #ddd;
 }
 
 .task-column {
     border-right: 1px solid #ddd;
-    min-height: 400px;
+    min-height: 300px;
     padding: 10px;
 }
 

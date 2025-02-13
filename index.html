@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Wochenaufgabenverwaltung</h1>
-    
+
     <div class="controls">
         <button id="prevWeek">◀ Vorherige Woche</button>
         <button id="todayButton">Heute</button>
@@ -16,8 +16,16 @@
     </div>
 
     <div class="calendar">
-        <div class="weekdays" id="weekdays"></div>
-        <div class="task-container" id="task-container"></div>
+        <div class="week-container">
+            <div class="weekdays" id="weekdays1"></div>
+            <div class="dates" id="dates1"></div>
+            <div class="task-container" id="task-container1"></div>
+        </div>
+        <div class="week-container">
+            <div class="weekdays" id="weekdays2"></div>
+            <div class="dates" id="dates2"></div>
+            <div class="task-container" id="task-container2"></div>
+        </div>
     </div>
 
     <script src="script.js"></script>
