@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
     let startDate = new Date();
-    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // 设置到本周一
+    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // 设置为本周一
 
     function renderCalendar() {
         renderWeek("weekdays", "dates", "task-container", startDate);
@@ -78,6 +78,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const taskText = document.createElement("span");
         taskText.textContent = input.value;
 
+        checkbox.addEventListener("change", function () {
+            if (checkbox.checked) {
+                taskText.style.textDecoration = "line-through";
+                taskText.style.color = "#777";
+            } else {
+                taskText.style.textDecoration = "none";
+                taskText.style.color = "black";
+            }
+        });
+
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "-";
         deleteButton.classList.add("del-btn");
@@ -92,6 +102,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.value = "";
     }
+
+    // **修正前后跳转周的问题**
+    document.getElementById("prevWeek").addEventListener("click", function () {
+        startDate.setDate(startDate.getDate() - 7);
+        renderCalendar();
+    });
+
+    document.getElementById("nextWeek").addEventListener("click", function () {
+        startDate.setDate(startDate.getDate() + 7);
+        renderCalendar();
+    });
+
+    document.getElementById("todayButton").addEventListener("click", function () {
+        startDate = new Date();
+        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+        renderCalendar();
+    });
 
     renderCalendar();
 });
