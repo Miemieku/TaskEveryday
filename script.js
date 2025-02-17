@@ -152,23 +152,24 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("importExcel").addEventListener("change", function (event) {
         const file = event.target.files[0];
         if (!file) return;
-
+    
         const reader = new FileReader();
         reader.onload = function (e) {
             const data = new Uint8Array(e.target.result);
             const workbook = XLSX.read(data, { type: "array" });
-
+    
             const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
             const tasks = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
-
-        // **🚨 清空所有任务**
-        document.querySelectorAll(".task-list").forEach(list => {
-            list.innerHTML = "";
-        });
+    
+            // **🚨 清空所有任务**
+            document.querySelectorAll(".task-list").forEach(list => {
+                list.innerHTML = "";
+            });
+    
             tasks.slice(1).forEach(row => {
-                const [date, taskText] = row;
+                const [date, taskText, completed] = row;
                 if (!date || !taskText) return;
-
+    
                 document.querySelectorAll(".task-column").forEach((column, index) => {
                     const dateText = document.querySelectorAll(".dates div")[index].textContent;
                     if (dateText === date) {
@@ -179,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         reader.readAsArrayBuffer(file);
     });
+    
 });
 
 
