@@ -1,9 +1,14 @@
+console.log("JavaScript wurde geladen!"); // 确保 JS 文件被正确加载
+
 document.addEventListener("DOMContentLoaded", function () {
+    console.log("DOM ist geladen!"); // 确保 HTML 加载完毕
+
     const weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
     let startDate = new Date();
-    startDate.setDate(startDate.getDate() - startDate.getDay() + 1); // 设置为本周一
+    startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
 
     function renderCalendar() {
+        console.log("Rendering calendar..."); // 确保 renderCalendar() 被调用
         renderWeek("weekdays", "dates", "task-container", startDate);
     }
 
@@ -12,6 +17,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const datesContainer = document.getElementById(datesId);
         const taskContainer = document.getElementById(containerId);
 
+        // 检查是否找到了正确的 HTML 元素
+        if (!weekdaysContainer || !datesContainer || !taskContainer) {
+            console.error("HTML-Struktur fehlt!");
+            return;
+        }
+
         weekdaysContainer.innerHTML = "";
         datesContainer.innerHTML = "";
         taskContainer.innerHTML = "";
@@ -19,41 +30,33 @@ document.addEventListener("DOMContentLoaded", function () {
         for (let i = 0; i < 7; i++) {
             let date = new Date(startOfWeek);
             date.setDate(startOfWeek.getDate() + i);
-
             let dateStr = date.toLocaleDateString("de-DE", { day: 'numeric', month: 'long' });
 
-            // 添加星期标题
             const dayHeader = document.createElement("div");
             dayHeader.textContent = weekDays[i];
             weekdaysContainer.appendChild(dayHeader);
 
-            // 添加日期
             const dateDiv = document.createElement("div");
             dateDiv.textContent = dateStr;
             datesContainer.appendChild(dateDiv);
 
-            // 创建任务列
             const column = document.createElement("div");
             column.classList.add("task-column");
 
-            // 如果是今天，添加蓝色背景
             const today = new Date();
             if (date.toDateString() === today.toDateString()) {
                 column.classList.add("today-column");
             }
 
-            // 任务列表
             const taskList = document.createElement("div");
             taskList.classList.add("task-list");
             column.appendChild(taskList);
 
-            // 输入框
             const input = document.createElement("input");
             input.type = "text";
             input.placeholder = "Aufgabe hinzufügen";
             column.appendChild(input);
 
-            // 添加按钮（+）
             const addButton = document.createElement("button");
             addButton.textContent = "+";
             addButton.classList.add("add-btn");
@@ -103,22 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
         input.value = "";
     }
 
-    // **修正前后跳转周的问题**
     document.getElementById("prevWeek").addEventListener("click", function () {
         startDate.setDate(startDate.getDate() - 7);
-        renderCalendar();
-    });
-
-    document.getElementById("nextWeek").addEventListener("click", function () {
-        startDate.setDate(startDate.getDate() + 7);
-        renderCalendar();
-    });
-
-    document.getElementById("todayButton").addEventListener("click", function () {
-        startDate = new Date();
-        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
-        renderCalendar();
-    });
-
-    renderCalendar();
-});
+        render
