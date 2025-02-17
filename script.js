@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
+        taskDiv.setAttribute("draggable", "true"); // ✅ 让任务可以拖拽
 
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
@@ -104,6 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
         taskList.appendChild(taskDiv);
 
         input.value = "";
+            // ✅ 让任务支持拖拽
+    taskDiv.addEventListener("dragstart", handleDragStart);
+    taskDiv.addEventListener("dragend", handleDragEnd);
     }
 
     document.getElementById("prevWeek").addEventListener("click", function () {
@@ -123,6 +127,32 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     renderCalendar();
+});
+
+let draggedTask = null;
+
+function handleDragStart(event) {
+    draggedTask = event.target; // 记录当前拖动的任务
+    event.target.classList.add("dragging");
+}
+
+function handleDragEnd(event) {
+    event.target.classList.remove("dragging");
+}
+
+
+document.querySelectorAll(".task-list").forEach(list => {
+    list.addEventListener("dragover", function (event) {
+        event.preventDefault(); // 允许拖拽进入
+    });
+
+    list.addEventListener("drop", function (event) {
+        event.preventDefault();
+        if (draggedTask) {
+            list.appendChild(draggedTask); // ✅ 移动任务
+            draggedTask = null;
+        }
+    });
 });
 
 
