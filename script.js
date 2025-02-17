@@ -124,3 +124,78 @@ document.addEventListener("DOMContentLoaded", function () {
 
     renderCalendar();
 });
+
+
+document.getElementById("exportExcel").addEventListener("click", function () {
+    const wb = XLSX.utils.book_new(); // 创建新的 Excel 工作簿
+    const ws_data = [["日期", "任务"]]; // Excel 头部
+
+    // 遍历任务列
+    document.querySelectorAll(".task-column").forEach((column, index) => {
+        const dateText = document.querySelectorAll(".dates div")[index].textContent;
+        column.querySelectorAll(".task span").forEach(task => {
+            ws_data.push([dateText, task.textContent]); // 添加任务
+        });
+    });
+
+    const ws = XLSX.utils.aoa_to_sheet(ws_data); // 转换数据到 Sheet
+    XLSX.utils.book_append_sheet(wb, ws, "Tasks"); // 添加 Sheet 到 Workbook
+
+    XLSX.writeFile(wb, "Wochenaufgaben.xlsx"); // 下载 Excel 文件
+});
+
+document.getElementById("importExcelBtn").addEventListener("click", function () {
+    document.getElementById("importExcel").click();
+});
+
+document.getElementById("importExcel").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, { type: "array" });
+
+        const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+        const tasks = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+
+        tasks.slice(1).forEach(row => {
+            const [date, taskText] = row;
+            if (!date || !taskText) return;
+
+            document.querySelectorAll(".task-column").forEach((column, index) => {
+                const dateText = document.querySelectorAll(".dates div")[index].textContent;
+                if (dateText === date) {
+                    addTaskToColumn(taskText, column);
+                }
+            });
+        });
+    };
+    reader.readAsArrayBuffer(file);
+});
+
+// 添加任务到列
+function addTaskToColumn(taskText, column) {
+    const taskList = column.querySelector(".task-list");
+    const taskDiv = document.createElement("div");
+    taskDiv.classList.add("task");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+
+    const taskSpan = document.createElement("span");
+    taskSpan.textContent = taskText;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "-";
+    deleteButton.classList.add("del-btn");
+    deleteButton.onclick = function () {
+        taskList.removeChild(taskDiv);
+    };
+
+    taskDiv.appendChild(checkbox);
+    taskDiv.appendChild(taskSpan);
+    taskDiv.appendChild(deleteButton);
+    taskList.appendChild(taskDiv);
+}

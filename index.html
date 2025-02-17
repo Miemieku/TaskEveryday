@@ -13,7 +13,11 @@
         <button id="prevWeek">◀ Vorherige Woche</button>
         <button id="todayButton">Heute</button>
         <button id="nextWeek">Nächste Woche ▶</button>
+        <button id="exportExcel">📤 导出 Excel</button>
+        <input type="file" id="importExcel" accept=".xlsx" style="display: none;">
+        <button id="importExcelBtn">📥 导入 Excel</button>
     </div>
+    
 
     <div class="calendar">
         <div class="week-container">
@@ -24,5 +28,7 @@
     </div>
 
     <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 </body>
 </html>
