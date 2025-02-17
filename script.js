@@ -70,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function addTask(input, taskList) {
+        if (!taskList) return;
         if (input.value.trim() === "") return;
 
         const taskDiv = document.createElement("div");
@@ -125,41 +126,6 @@ document.addEventListener("DOMContentLoaded", function () {
         startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
         renderCalendar();
     });
-
-    renderCalendar();
-});
-
-let draggedTask = null;
-
-function handleDragStart(event) {
-    draggedTask = event.target; // 记录当前拖动的任务
-    event.target.classList.add("dragging");
-    event.dataTransfer.effectAllowed = "move"; // 显示拖拽为移动
-}
-
-
-function handleDragEnd(event) {
-    event.target.classList.remove("dragging");
-}
-
-document.querySelectorAll(".task-list").forEach(list => {
-    list.addEventListener("dragover", function (event) {
-        event.preventDefault(); // 允许拖拽进入
-    });
-
-    list.addEventListener("drop", function (event) {
-        event.preventDefault();
-        if (draggedTask && draggedTask !== event.target) {
-            list.appendChild(draggedTask); // ✅ 移动任务
-            draggedTask = null; // 清空拖拽对象
-        }
-    });
-});
-
-
-
-document.addEventListener("DOMContentLoaded", function () {
-    // 📤 导出 Excel
     document.getElementById("exportExcel").addEventListener("click", function () {
         const wb = XLSX.utils.book_new();
         const ws_data = [["日期", "任务"]];
@@ -212,8 +178,43 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         reader.readAsArrayBuffer(file);
     });
+
+    function setupDragAndDrop() {
+        document.querySelectorAll(".task-list").forEach(list => {
+            list.addEventListener("dragover", function (event) {
+                event.preventDefault();
+            });
     
+            list.addEventListener("drop", function (event) {
+                event.preventDefault();
+                
+                let targetList = event.target.closest(".task-list"); // ✅ 获取正确的 `task-list`
+                if (!targetList || !draggedTask) return;
+                
+                targetList.appendChild(draggedTask);
+                draggedTask.classList.remove("dragging");
+                draggedTask = null;
+            });            
+        });
+    }
+
+    renderCalendar();
+    setupDragAndDrop(); // ✅ 确保拖拽事件在 DOM 生成后绑定
 });
+
+let draggedTask = null;
+
+function handleDragStart(event) {
+    draggedTask = event.target.closest(".task");; // 记录当前拖动的任务
+    event.target.classList.add("dragging");
+    event.dataTransfer.setData("text/plain", "task"); // ✅ 必须设置 dataTransfer
+    event.dataTransfer.effectAllowed = "move"; // 显示拖拽为移动
+}
+
+
+function handleDragEnd(event) {
+    event.target.classList.remove("dragging");
+}
 
 
 // 添加任务到列
@@ -223,6 +224,7 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
 
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task");
+    taskDiv.setAttribute("draggable", "true");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -247,4 +249,8 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
     taskDiv.appendChild(taskSpan);
     taskDiv.appendChild(deleteButton);
     taskList.appendChild(taskDiv);
+    
+    // ✅ 绑定拖拽事件
+    taskDiv.addEventListener("dragstart", handleDragStart);
+    taskDiv.addEventListener("dragend", handleDragEnd);
 }
