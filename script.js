@@ -82,7 +82,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const taskText = document.createElement("span");
         taskText.textContent = input.value;
+        
+        const taskSpan = document.createElement("span");
+        taskSpan.textContent = taskText;
         taskSpan.classList.add("editable");
+    
 
         // ✅ 让手动输入的任务也支持修改
         taskSpan.addEventListener("click", function () {
