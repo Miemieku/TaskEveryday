@@ -71,29 +71,34 @@ button:hover {
 /* 任务容器 */
 .task-container {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    border: 1px solid #ddd;
+    grid-template-columns: repeat(7, 1fr); /* 7列，平均分布 */
+    width: 100vw;  /* 让任务栏填满整个视口宽度 */
+    min-height: 80vh; /* 至少占据 80% 的屏幕高度 */
+    height: auto; /* 根据任务数量动态调整高度 */
     background: white;
-    width: 95%;
-    max-width: 1200px;
-    min-height: 60vh;
-    height: auto;
-    margin: 20px auto;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto; /* 水平居中 */
+    border: 1px solid #ddd;
 }
+
 
 /* 任务列 */
 .task-column {
     display: flex;
     flex-direction: column;
-    align-items: stretch;
     justify-content: flex-start;
+    align-items: stretch;
     min-height: 250px;
-    height: auto;
+    height: 100%;
     padding: 10px;
+    border-right: 2px solid #ddd; /* 每列之间有间隔 */
     background: white;
-    border-right: 2px solid #ddd;  /* 任务栏之间的分隔线 */
 }
+
+/* 移除最后一列的右侧边框，防止额外的线条 */
+.task-column:last-child {
+    border-right: none;
+}
+
 
 /* 让最后一列（星期日）没有右侧边框 */
 .task-column:last-child {
@@ -110,13 +115,13 @@ button:hover {
 .task {
     background: #eef1f5;
     margin: 3px 0;
-    padding: 5px;
+    padding: 8px;
     border-radius: 3px;
     display: flex;
-    justify-content: flex-start; /* 让内容靠左 */
     align-items: center;
     font-size: 14px;
-    gap: 10px; /* 让勾选框和文本之间有合适的间距 */
+    justify-content: flex-start;
+    gap: 10px;
 }
 
 /* 让复选框靠最左侧 */
@@ -127,10 +132,20 @@ button:hover {
 
 /* 任务文本左对齐 */
 .task span {
-    flex-grow: 1; /* 让文本占据剩余空间 */
+    flex-grow: 1;
     word-break: break-word;
     text-align: left;
 }
+
+/* 任务输入框优化 */
+.task-column input {
+    width: 90%; /* 让输入框更大 */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 14px;
+}
+
 
 /* 勾选任务后添加删除线 */
 .task input:checked + span {
@@ -138,14 +153,6 @@ button:hover {
     color: #777;
 }
 
-/* 任务输入框 */
-.task-column input {
-    width: 80%;
-    padding: 6px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
-}
 
 /* 添加任务按钮（改为 +） */
 .add-btn {
