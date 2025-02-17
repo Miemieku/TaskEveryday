@@ -108,4 +108,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("prevWeek").addEventListener("click", function () {
         startDate.setDate(startDate.getDate() - 7);
-        render
+        renderCalendar();
+    });
+
+    document.getElementById("nextWeek").addEventListener("click", function () {
+        startDate.setDate(startDate.getDate() + 7);
+        renderCalendar();
+    });
+
+    document.getElementById("todayButton").addEventListener("click", function () {
+        startDate = new Date();
+        startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+        renderCalendar();
+    });
+
+    renderCalendar();
+});
