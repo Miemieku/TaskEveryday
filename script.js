@@ -80,9 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
 
-        const taskText = document.createElement("span");
-        taskText.textContent = input.value;
-        
         const taskSpan = document.createElement("span");
         taskSpan.textContent = taskText;
         taskSpan.classList.add("editable");
