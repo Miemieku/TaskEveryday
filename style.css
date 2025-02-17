@@ -128,10 +128,14 @@ button:hover {
 
 /* 让复选框靠最左侧 */
 .task input[type="checkbox"] {
-    margin-left: 0;
-    margin-right: 8px; 
+    width: 16px;  /* 固定宽度 */
+    height: 16px; /* 固定高度 */
+    margin: 0; /* 移除默认 margin */
+    margin-right: 8px; /* 确保与文本有间距 */
     cursor: pointer;
+    flex-shrink: 0; /* 不允许被拉伸 */
 }
+
 
 /* 任务文本左对齐 */
 .task span {
