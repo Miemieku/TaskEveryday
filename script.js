@@ -161,6 +161,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
             const tasks = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
 
+        // **🚨 清空所有任务**
+        document.querySelectorAll(".task-list").forEach(list => {
+            list.innerHTML = "";
+        });
             tasks.slice(1).forEach(row => {
                 const [date, taskText] = row;
                 if (!date || !taskText) return;
@@ -168,7 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".task-column").forEach((column, index) => {
                     const dateText = document.querySelectorAll(".dates div")[index].textContent;
                     if (dateText === date) {
-                        addTaskToColumn(taskText, column);
+                        addTaskToColumn(taskText, column, completed === "Ja");
                     }
                 });
             });
@@ -186,9 +190,15 @@ function addTaskToColumn(taskText, column) {
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
+    checkbox.checked = isCompleted; // ✅ 已完成任务勾选
 
     const taskSpan = document.createElement("span");
     taskSpan.textContent = taskText;
+
+    checkbox.addEventListener("change", function () {
+        taskSpan.style.textDecoration = checkbox.checked ? "line-through" : "none";
+        taskSpan.style.color = checkbox.checked ? "#777" : "black";
+    });
 
     const deleteButton = document.createElement("button");
     deleteButton.textContent = "-";
