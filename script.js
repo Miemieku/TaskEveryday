@@ -72,51 +72,47 @@ document.addEventListener("DOMContentLoaded", function () {
     function addTask(input, taskList) {
         if (!taskList) return;
         if (input.value.trim() === "") return;
-
+    
         const taskDiv = document.createElement("div");
         taskDiv.classList.add("task");
         taskDiv.setAttribute("draggable", "true"); // ✅ 让任务可以拖拽
-
+    
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-
-        const taskSpan = document.createElement("span");
-        taskSpan.textContent = taskText;
+    
+        const taskSpan = document.createElement("span"); // ✅ 直接创建任务文本
+        taskSpan.textContent = input.value; // ✅ 直接赋值 input.value
         taskSpan.classList.add("editable");
     
-
-        // ✅ 让手动输入的任务也支持修改
+        // ✅ 让任务支持修改
         taskSpan.addEventListener("click", function () {
             editTask(taskSpan);
         });
-
+    
         checkbox.addEventListener("change", function () {
-            if (checkbox.checked) {
-                taskText.style.textDecoration = "line-through";
-                taskText.style.color = "#777";
-            } else {
-                taskText.style.textDecoration = "none";
-                taskText.style.color = "black";
-            }
+            taskSpan.style.textDecoration = checkbox.checked ? "line-through" : "none";
+            taskSpan.style.color = checkbox.checked ? "#777" : "black";
         });
-
+    
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "-";
         deleteButton.classList.add("del-btn");
         deleteButton.onclick = function () {
             taskList.removeChild(taskDiv);
         };
-
+    
         taskDiv.appendChild(checkbox);
-        taskDiv.appendChild(taskText);
+        taskDiv.appendChild(taskSpan); // ✅ 正确添加任务文本
         taskDiv.appendChild(deleteButton);
         taskList.appendChild(taskDiv);
-
+    
         input.value = "";
-            // ✅ 让任务支持拖拽
-    taskDiv.addEventListener("dragstart", handleDragStart);
-    taskDiv.addEventListener("dragend", handleDragEnd);
+    
+        // ✅ 让任务支持拖拽
+        taskDiv.addEventListener("dragstart", handleDragStart);
+        taskDiv.addEventListener("dragend", handleDragEnd);
     }
+    
 
     document.getElementById("prevWeek").addEventListener("click", function () {
         startDate.setDate(startDate.getDate() - 7);
