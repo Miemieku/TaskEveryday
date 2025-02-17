@@ -89,46 +89,63 @@ button:hover {
     background: #d6e9f8 !important;
     border-left: 3px solid #005a9e;
 }
-/* 任务项样式 */
+
+/* 任务样式 */
 .task {
     background: #eef1f5;
     margin: 3px 0;
     padding: 5px;
     border-radius: 3px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     font-size: 12px;
-    justify-content: space-between;
 }
 
-/* 让复选框靠左 */
-.task input[type="checkbox"] {
-    margin-right: 5px;
+/* 任务输入框 */
+.task-column input {
+    width: 75%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 12px;
+}
+
+/* 任务操作按钮 */
+.task button {
+    background: #d9534f;
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 12px;
+}
+
+.task button:hover {
+    background: #c9302c;
+}
+
+/* 添加任务按钮（改为 +） */
+.add-btn {
+    background: #0078D7;
+    color: white;
+    border: none;
+    padding: 5px;
     cursor: pointer;
+    font-size: 14px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    width: 25px;
 }
 
-/* 任务文本默认状态 */
-.task span {
-    flex-grow: 1;  /* 让文本占据剩余空间 */
-    word-break: break-word;
-    text-align: left;  /* 文字左对齐 */
+.add-btn:hover {
+    background: #005a9e;
 }
 
-/* 勾选任务后添加删除线 */
-.task input:checked + span {
-    text-decoration: line-through;
-    color: #777;
-}
-
-/* 删除按钮（-） */
+/* 删除任务按钮（改为 -） */
 .del-btn {
     background: #d9534f;
     border-radius: 3px;
-    padding: 3px 6px;
+    padding: 3px;
     font-size: 12px;
-    border: none;
-    cursor: pointer;
-    transition: background 0.2s;
 }
 
 .del-btn:hover {
