@@ -40,7 +40,6 @@ button:hover {
     display: flex;
     flex-direction: column;
     width: 95%;
-    max-width: 1200px;  /* 限制最大宽度，避免过满 */
     margin: 20px auto;  /* 居中对齐 */
     padding-bottom: 10px;
 }
@@ -130,6 +129,7 @@ button:hover {
 /* 让复选框靠最左侧 */
 .task input[type="checkbox"] {
     margin-left: 0;
+    margin-right: 8px; 
     cursor: pointer;
 }
 
