@@ -82,6 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const taskText = document.createElement("span");
         taskText.textContent = input.value;
+        taskSpan.classList.add("editable");
+
+        // ✅ 让手动输入的任务也支持修改
+        taskSpan.addEventListener("click", function () {
+            editTask(taskSpan);
+        });
 
         checkbox.addEventListener("change", function () {
             if (checkbox.checked) {
@@ -232,6 +238,12 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
 
     const taskSpan = document.createElement("span");
     taskSpan.textContent = taskText;
+    taskSpan.classList.add("editable");
+
+    // ✅ 让任务支持修改
+    taskSpan.addEventListener("click", function () {
+        editTask(taskSpan);
+    });
 
     checkbox.addEventListener("change", function () {
         taskSpan.style.textDecoration = checkbox.checked ? "line-through" : "none";
@@ -249,8 +261,47 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
     taskDiv.appendChild(taskSpan);
     taskDiv.appendChild(deleteButton);
     taskList.appendChild(taskDiv);
-    
+
     // ✅ 绑定拖拽事件
     taskDiv.addEventListener("dragstart", handleDragStart);
     taskDiv.addEventListener("dragend", handleDragEnd);
+}
+
+function editTask(taskSpan) {
+    const oldText = taskSpan.textContent;
+    const input = document.createElement("input");
+    input.type = "text";
+    input.value = oldText;
+    input.classList.add("edit-input");
+
+    // ✅ 按 Enter 或失去焦点时保存
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            saveTaskEdit(input, taskSpan);
+        }
+    });
+
+    input.addEventListener("blur", function () {
+        saveTaskEdit(input, taskSpan);
+    });
+
+    taskSpan.replaceWith(input);
+    input.focus();
+}
+
+function saveTaskEdit(input, taskSpan) {
+    const newText = input.value.trim();
+    if (newText === "") {
+        newText = "Neue Aufgabe"; // ✅ 如果输入为空，默认值
+    }
+
+    taskSpan.textContent = newText;
+    taskSpan.classList.add("editable");
+
+    // ✅ 重新绑定点击事件
+    taskSpan.addEventListener("click", function () {
+        editTask(taskSpan);
+    });
+
+    input.replaceWith(taskSpan);
 }
