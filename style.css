@@ -72,12 +72,15 @@ button:hover {
 .task-container {
     display: grid;
     grid-template-columns: repeat(7, 1fr); /* 7列，平均分布 */
-    width: 100vw;  /* 让任务栏填满整个视口宽度 */
+    width: 100vw;  /* 让任务栏填满整个屏幕 */
+    max-width: 100%;  /* 避免超出页面 */
     min-height: 80vh; /* 至少占据 80% 的屏幕高度 */
     height: auto; /* 根据任务数量动态调整高度 */
     background: white;
-    margin: 0 auto; /* 水平居中 */
+    margin: 0;
+    padding: 0;
     border: 1px solid #ddd;
+    overflow: hidden; /* 避免出现滚动条 */
 }
 
 
