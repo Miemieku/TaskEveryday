@@ -185,8 +185,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // 添加任务到列
-function addTaskToColumn(taskText, column) {
+function addTaskToColumn(taskText, column, isCompleted = false) {
     const taskList = column.querySelector(".task-list");
+    if (!taskList) return;
+
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task");
 
