@@ -134,12 +134,13 @@ let draggedTask = null;
 function handleDragStart(event) {
     draggedTask = event.target; // 记录当前拖动的任务
     event.target.classList.add("dragging");
+    event.dataTransfer.effectAllowed = "move"; // 显示拖拽为移动
 }
+
 
 function handleDragEnd(event) {
     event.target.classList.remove("dragging");
 }
-
 
 document.querySelectorAll(".task-list").forEach(list => {
     list.addEventListener("dragover", function (event) {
@@ -148,12 +149,13 @@ document.querySelectorAll(".task-list").forEach(list => {
 
     list.addEventListener("drop", function (event) {
         event.preventDefault();
-        if (draggedTask) {
+        if (draggedTask && draggedTask !== event.target) {
             list.appendChild(draggedTask); // ✅ 移动任务
-            draggedTask = null;
+            draggedTask = null; // 清空拖拽对象
         }
     });
 });
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
