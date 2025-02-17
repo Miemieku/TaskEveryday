@@ -2,51 +2,45 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f6f9; /* 更加柔和的灰色背景 */
+    background-color: #f4f6f9;
     margin: 0;
     padding: 0;
 }
 
 /* 标题 */
 h1 {
-    margin: 20px 0;
-    color: #333; /* 深色标题 */
+    font-size: 20px;
+    margin: 10px 0;
+    color: #333;
 }
 
 /* 控制按钮区域 */
 .controls {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 button {
-    background: #005a9e; /* 更深的蓝色 */
+    background: #005a9e;
     color: white;
     border: none;
-    padding: 10px 15px;
+    padding: 6px 10px;
     cursor: pointer;
-    margin: 5px;
-    font-size: 16px;
-    border-radius: 5px; /* 圆角设计 */
+    margin: 3px;
+    font-size: 14px;
+    border-radius: 5px;
     transition: background 0.2s;
 }
 
 button:hover {
-    background: #003f73; /* 深色鼠标悬浮效果 */
+    background: #003f73;
 }
 
 /* 日历主框架 */
 .calendar {
     display: flex;
     flex-direction: column;
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
-    gap: 15px;
-}
-
-/* 每周框架 */
-.week-container {
-    display: flex;
-    flex-direction: column;
 }
 
 /* 星期标题 */
@@ -54,19 +48,20 @@ button:hover {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     font-weight: bold;
-    padding: 12px 0;
+    padding: 8px 0;
+    font-size: 14px;
 }
 
 /* 星期标题（顶部） */
 .weekdays {
-    background: #1f4e79; /* 深蓝色背景 */
+    background: #1f4e79;
     color: white;
     border-radius: 5px 5px 0 0;
 }
 
 /* 具体日期（第二行） */
 .dates {
-    background: #e7e9ed; /* 更加专业的灰色 */
+    background: #e7e9ed;
     color: #333;
     font-weight: normal;
 }
@@ -82,47 +77,77 @@ button:hover {
 /* 任务列 */
 .task-column {
     border-right: 1px solid #ddd;
-    min-height: 250px;
-    padding: 10px;
+    min-height: 180px;
+    padding: 5px;
     background: white;
     transition: background 0.2s;
+    font-size: 14px;
 }
 
 /* 今日列：使用淡蓝色突出 */
 .today-column {
-    background: #d6e9f8 !important; /* 淡蓝色 */
-    border-left: 4px solid #005a9e; /* 左侧加蓝色标记 */
+    background: #d6e9f8 !important;
+    border-left: 3px solid #005a9e;
 }
 
 /* 任务样式 */
 .task {
-    background: #eef1f5; /* 轻微的阴影背景 */
-    margin: 5px 0;
-    padding: 8px;
-    border-radius: 5px;
+    background: #eef1f5;
+    margin: 3px 0;
+    padding: 5px;
+    border-radius: 3px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-left: 4px solid #0078D7;
+    font-size: 12px;
 }
 
 /* 任务输入框 */
 .task-column input {
-    width: 80%;
-    padding: 8px;
+    width: 75%;
+    padding: 5px;
     border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-top: 5px;
+    border-radius: 3px;
+    font-size: 12px;
 }
 
-/* 任务删除按钮 */
+/* 任务操作按钮 */
 .task button {
-    background: #d9534f; /* 红色删除按钮 */
+    background: #d9534f;
     border-radius: 3px;
-    padding: 5px;
-    font-size: 14px;
+    padding: 3px;
+    font-size: 12px;
 }
 
 .task button:hover {
+    background: #c9302c;
+}
+
+/* 添加任务按钮（改为 +） */
+.add-btn {
+    background: #0078D7;
+    color: white;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 3px;
+    transition: background 0.2s;
+    width: 25px;
+}
+
+.add-btn:hover {
+    background: #005a9e;
+}
+
+/* 删除任务按钮（改为 -） */
+.del-btn {
+    background: #d9534f;
+    border-radius: 3px;
+    padding: 3px;
+    font-size: 12px;
+}
+
+.del-btn:hover {
     background: #c9302c;
 }
