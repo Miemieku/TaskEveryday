@@ -145,11 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const ws = XLSX.utils.aoa_to_sheet(ws_data);
         XLSX.utils.book_append_sheet(wb, ws, "Aufgaben");
-        
+
         const today = new Date().toISOString().split("T")[0]; // 📌 获取 YYYY-MM-DD 格式的日期
         const fileName = `Wochenaufgaben_${today}.xlsx`; // ✅ 生成文件名
         XLSX.writeFile(wb, fileName);        
-        XLSX.writeFile(wb, "Wochenaufgaben.xlsx");
     });
     
 
