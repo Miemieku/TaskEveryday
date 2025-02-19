@@ -160,6 +160,12 @@ button:hover {
     color: #777;
 }
 
+/* 添加 CSS 让完成任务有划线 */
+.task.completed span {
+    text-decoration: line-through;
+    color: #777;
+}
+
 
 /* 添加任务按钮（改为 +） */
 .add-btn {

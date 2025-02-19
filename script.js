@@ -131,19 +131,22 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.getElementById("exportExcel").addEventListener("click", function () {
         const wb = XLSX.utils.book_new();
-        const ws_data = [["日期", "任务"]];
-
+        const ws_data = [["Datum", "Aufgabe", "Erledigt"]]; // ✅ 增加 "Erledigt" 列
+    
         document.querySelectorAll(".task-column").forEach((column, index) => {
             const dateText = document.querySelectorAll(".dates div")[index].textContent;
-            column.querySelectorAll(".task span").forEach(task => {
-                ws_data.push([dateText, task.textContent]);
+            column.querySelectorAll(".task").forEach(task => {
+                const taskText = task.querySelector("span").textContent;
+                const isChecked = task.querySelector("input[type='checkbox']").checked ? "Ja" : "Nein"; // ✅ 记录任务是否完成
+                ws_data.push([dateText, taskText, isChecked]);
             });
         });
-
+    
         const ws = XLSX.utils.aoa_to_sheet(ws_data);
-        XLSX.utils.book_append_sheet(wb, ws, "Tasks");
+        XLSX.utils.book_append_sheet(wb, ws, "Aufgaben");
         XLSX.writeFile(wb, "Wochenaufgaben.xlsx");
     });
+    
 
     // 📥 导入 Excel
     document.getElementById("importExcelBtn").addEventListener("click", function () {
@@ -174,13 +177,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll(".task-column").forEach((column, index) => {
                     const dateText = document.querySelectorAll(".dates div")[index].textContent;
                     if (dateText === date) {
-                        addTaskToColumn(taskText, column, completed === "Ja");
+                        addTaskToColumn(taskText, column, completed === "Ja"); // ✅ 传递完成状态
                     }
                 });
             });
         };
         reader.readAsArrayBuffer(file);
     });
+    
 
     function setupDragAndDrop() {
         document.querySelectorAll(".task-list").forEach(list => {
@@ -227,11 +231,13 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
 
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task");
-    taskDiv.setAttribute("draggable", "true");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.checked = isCompleted; // ✅ 已完成任务勾选
+    checkbox.checked = isCompleted; // ✅ 任务完成状态
+    if (isCompleted) {
+        taskDiv.classList.add("completed"); // ✅ 添加划线样式
+    }
 
     const taskSpan = document.createElement("span");
     taskSpan.textContent = taskText;
@@ -258,11 +264,8 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
     taskDiv.appendChild(taskSpan);
     taskDiv.appendChild(deleteButton);
     taskList.appendChild(taskDiv);
-
-    // ✅ 绑定拖拽事件
-    taskDiv.addEventListener("dragstart", handleDragStart);
-    taskDiv.addEventListener("dragend", handleDragEnd);
 }
+
 
 function editTask(taskSpan) {
     const oldText = taskSpan.textContent;
