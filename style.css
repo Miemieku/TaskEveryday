@@ -166,6 +166,10 @@ button:hover {
     color: #777;
 }
 
+/* ✅ 确保完成的任务仍然可拖拽 */
+.task.completed[draggable="true"] {
+    cursor: grab;
+}
 
 /* 添加任务按钮（改为 +） */
 .add-btn {
