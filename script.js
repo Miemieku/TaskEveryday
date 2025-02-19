@@ -231,6 +231,7 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
 
     const taskDiv = document.createElement("div");
     taskDiv.classList.add("task");
+    taskDiv.setAttribute("draggable", "true");
 
     const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
@@ -264,6 +265,11 @@ function addTaskToColumn(taskText, column, isCompleted = false) {
     taskDiv.appendChild(taskSpan);
     taskDiv.appendChild(deleteButton);
     taskList.appendChild(taskDiv);
+    
+        // ✅ 让任务支持拖拽
+    taskDiv.addEventListener("dragstart", handleDragStart);
+    taskDiv.addEventListener("dragend", handleDragEnd);
+
 }
 
 
